@@ -1,0 +1,9 @@
+# I don want fix not my code
+backend
+
+# I want fix my code
+frontend/build
+frontend/node_modules
+frontend/public
+frontend/*.json
+frontend/yarn.lock
