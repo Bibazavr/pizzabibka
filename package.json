@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "cd ./backend && yarn start",
+    "start:dev": "yarn heroku-prebuild && yarn start",
     "heroku-prebuild": "cd ./frontend && yarn && yarn build && cp -r ./build/ ../backend/ && cd ../backend && yarn",
     "heroku-postbuild": "echo This runs after Heroku installs dependencies, but before Heroku prunes and caches dependencies.",
     "heroku-cleanup": "echo This runs after Heroku prunes and caches dependencies."

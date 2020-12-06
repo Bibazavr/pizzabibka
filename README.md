@@ -3,7 +3,7 @@
 * Clone this repo `git clone https://github.com/Bibazavr/pizzabibka`;
 * Go to the app folder `cd pizzabibka`;
 * Install the dependencies `yarn`;
-* Run the app `yarn start`.
+* Run the app `yarn start:dev`.
 
 The app starts at `http://localhost:9000/`. Open this link in a browser, and you will be able to test the frontend.
 
