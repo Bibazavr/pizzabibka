@@ -1,7 +1,6 @@
 {
   "name": "pizzabibka",
   "version": "0.0.1",
-  "main": "index.js",
   "repository": "https://github.com/Bibazavr/pizzabibka",
   "author": "Bibazavr <lirik.hariev@gmail.com>",
   "license": "MIT",
