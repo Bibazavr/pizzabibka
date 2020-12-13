@@ -1,19 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
+import {Provider} from 'react-redux';
 
 import './index.css';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 import {ErrorBoundary} from './components/ErrorBoundary';
+import {store} from './redux/store';
+import {APIContext} from './context/WithAPI';
+import {API} from './API';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ErrorBoundary>
-        <App />
-      </ErrorBoundary>
-    </BrowserRouter>
+    <APIContext.Provider value={new API()}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <ErrorBoundary>
+            <App />
+          </ErrorBoundary>
+        </BrowserRouter>
+      </Provider>
+    </APIContext.Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
