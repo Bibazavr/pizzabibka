@@ -16,6 +16,7 @@ interface ProductProps {
 const useStyles = makeStyles({
   root: {
     margin: 5,
+    maxWidth: 220,
     flexBasis: 200,
     flexGrow: 1,
     display: 'flex',

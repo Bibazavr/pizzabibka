@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     display: 'flex',
     margin: 5,
     flexWrap: 'wrap',
-    justifyContent: 'stretch',
+    justifyContent: 'center',
     alignContent: 'center',
     flexDirection: 'row',
   },
