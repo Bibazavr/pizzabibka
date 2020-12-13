@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
@@ -10,16 +10,16 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      left: 1000,
     },
   })
 );
-export const Cart = (): React.ReactElement => {
+export const Home = (): React.ReactElement => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Typography>Cart</Typography>
-      <Link to="/">Go to home</Link>
+      <Typography>Home</Typography>
     </div>
   );
 };
