@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import {API} from '../../../../API';
 import {WithAPI} from '../../../../contexts/WithAPI';
@@ -21,6 +22,9 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignContent: 'center',
     flexDirection: 'row',
+  },
+  loader: {
+    width: '100%',
   },
 });
 
@@ -41,6 +45,7 @@ const ProductsIMPL = (props: ProductsProps): React.ReactElement => {
   return (
     <div className={classes.root}>
       {products.error && <Typography>{products.error}</Typography>}
+      {products.loading && <LinearProgress className={classes.loader} />}
       {products.data
         ?.filter((prod) => prod.type === 'pizza')
         .map((prod, index) => {

@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import {GlobalState} from '../../../redux/reducers';
 import {CartObject} from './CartObject';
@@ -17,11 +18,15 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      margin: 5,
       alignItems: 'center',
       justifyContent: 'center',
     },
     totalPrice: {
       margin: 5,
+    },
+    loader: {
+      width: '100%',
     },
   })
 );
@@ -50,6 +55,7 @@ const CartIMPL = (props: CartProps): React.ReactElement => {
   }, [products, cart]);
   return (
     <div className={classes.root}>
+      {products.loading && <LinearProgress className={classes.loader} />}
       {Object.keys(cart.data).map((title, index) => {
         const product = products.data.find((prod) => prod.title === title);
         if (!product) return;
@@ -75,7 +81,7 @@ export const totalPriceCalculate = (
   cart: CartState
 ): string => {
   let total = 0;
-  Object.keys(cart.data).map((title, index) => {
+  Object.keys(cart.data).map((title) => {
     const product = products.find((prod) => prod.title === title);
     if (!product) return;
     total = total + product.price * cart.data[title];

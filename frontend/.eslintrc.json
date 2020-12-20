@@ -24,7 +24,7 @@
     "rules": {
         "indent": [
             "error",
-            2, { "SwitchCase": 1 }
+            2, { "SwitchCase": 1, "offsetTernaryExpressions": true }
         ],
         "linebreak-style": [
             "error",

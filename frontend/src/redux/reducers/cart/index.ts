@@ -3,10 +3,12 @@ import Cookies from 'cookies-js';
 import {CartActions, CartState} from './types';
 import {addToCartHelper, removeFromCartHelper} from './utils';
 
-const initialState: CartState = JSON.parse(Cookies.get('cart')) ?? {
-  data: {},
-  count: 0,
-};
+const initialState: CartState = Cookies.get('cart')
+  ? JSON.parse(Cookies.get('cart'))
+  : {
+      data: {},
+      count: 0,
+    };
 
 export const CartReducer = (
   state = initialState,
