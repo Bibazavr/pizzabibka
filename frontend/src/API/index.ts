@@ -1,5 +1,5 @@
 import {HEROKU_API_URI, LOCAL_API_URI} from '../constants';
-import {BaseCallResult, Products, Register} from './types';
+import {BaseCallResult, ObtainingCallback, Products, Register} from './types';
 
 const {origin} = window.location;
 const apiUrl =
@@ -25,14 +25,15 @@ export class API {
       method,
       headers,
       body,
+      credentials: 'same-origin',
     })
-      .catch((e) => {
-        console.log('backend error', e);
-        return e;
-      })
       .then((r) => {
         console.log('backend response', r);
         return r.json();
+      })
+      .catch((e) => {
+        console.log('backend error', e);
+        return e;
       });
   };
 
@@ -41,18 +42,27 @@ export class API {
   };
 
   register = async (email: string, password: string): Promise<Register> => {
-    return await this.request('user/registration', 'POST', {email, password});
+    return (await this.request('/user/registration', 'POST', {
+      email,
+      password,
+    })) as Register;
   };
 
-  obtainToken = async (email: string, password: string): Promise<Register> => {
-    return await this.request('/token/obtaining', 'POST', {email, password});
+  obtainToken = async (
+    email: string,
+    password: string
+  ): Promise<ObtainingCallback> => {
+    return (await this.request('/token/obtaining', 'POST', {
+      email,
+      password,
+    })) as ObtainingCallback;
   };
 
   getUserData = async (id: string): Promise<Register> => {
-    return await this.request(`/user/${id}`);
+    return (await this.request(`/user/${id}`)) as Register;
   };
 
   verifyToken = async (): Promise<Register> => {
-    return await this.request('/token/verification');
+    return (await this.request('/token/verification')) as Register;
   };
 }

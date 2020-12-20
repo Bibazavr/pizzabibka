@@ -7,7 +7,10 @@ import {InputLabel} from '@material-ui/core';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
-import {Visibility, VisibilityOff} from '@material-ui/icons';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import Button from '@material-ui/core/Button';
+
 import {AuthContextTypes, WithAuth} from '../../../contexts/WithAuth';
 
 interface SignUpProps {
@@ -35,6 +38,9 @@ const SignUpIMPL = (props: SignUpProps): React.ReactElement => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   console.log(props);
+  const submit = () => {
+    props.auth.register(email, password);
+  };
   return (
     <div className={classes.root}>
       <TextField
@@ -64,6 +70,7 @@ const SignUpIMPL = (props: SignUpProps): React.ReactElement => {
           }
         />
       </FormControl>
+      <Button onClick={submit}>Submit</Button>
     </div>
   );
 };

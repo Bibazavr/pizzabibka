@@ -5,7 +5,7 @@ import {API} from '../../API';
 
 export interface AuthContextTypes {
   authenticated: boolean;
-  user: null;
+  user: null | Record<string, unknown>;
   token: string;
   obtainToken: (email: string, password: string) => void;
   logout: () => void;
@@ -56,39 +56,66 @@ export interface AuthProps {
 }
 
 const AuthIMPL = (props: AuthProps): React.ReactElement => {
-  const [user, setUser] = React.useState(null);
-  const [authStatus, setAuthStatus] = React.useState();
+  const [user, setUser] = React.useState<Record<string, unknown> | null>(null);
+  // const [authStatus, setAuthStatus] = React.useState();
 
   const register = (email: string, password: string) => {
-    props.API.register(email, password).then((res) => {
-      console.log(res);
-    });
+    props.API.register(email, password)
+      .then((res) => {
+        console.log('register success', res);
+      })
+      .catch((e) => {
+        console.log('register error', e);
+      });
   };
 
   const obtainToken = (email: string, password: string) => {
-    props.API.obtainToken(email, password).then((res) => {
-      console.log(res);
-    });
+    props.API.obtainToken(email, password)
+      .then((res) => {
+        console.log('obtainToken success', res);
+        const {error, result, status} = res;
+
+        if (error || status >= 300) {
+          console.log('obtainToken error: ', error);
+        } else {
+          getUserData(result.id);
+        }
+      })
+      .catch((e) => {
+        console.log('obtainToken', e);
+      });
   };
 
   const logout = () => {
     Cookies.set('token', '');
+    let date: Date | number = new Date();
+    date = date.setDate(date.getDate() - 1);
+    date = new Date(date);
+    Cookies.set('token', '', {expires: date});
     setUser(null);
   };
 
   const getUserData = React.useCallback(
     (id: string) => {
-      props.API.getUserData(id).then((res) => {
-        console.log(res);
-      });
+      props.API.getUserData(id)
+        .then((res) => {
+          console.log('getUserData success', res);
+        })
+        .catch((e) => {
+          console.error('getUserData error', e);
+        });
     },
     [setUser]
   );
 
   const verifyToken = React.useCallback(() => {
-    props.API.verifyToken().then((res) => {
-      console.log(res);
-    });
+    props.API.verifyToken()
+      .then((res) => {
+        console.log('verifyToken success', res);
+      })
+      .catch((e) => {
+        console.error('verifyToken error', e);
+      });
   }, [getUserData]);
 
   React.useEffect(() => {
@@ -102,7 +129,7 @@ const AuthIMPL = (props: AuthProps): React.ReactElement => {
 
   const auth: AuthContextTypes = {
     authenticated: false,
-    user: null,
+    user: user,
     token: '',
     obtainToken: obtainToken,
     logout: logout,

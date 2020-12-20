@@ -21,4 +21,20 @@ export interface Products extends BaseCallResult {
   result: Product[];
 }
 
-export type Register = BaseCallResult;
+export interface Register {
+  id: string;
+  token: string;
+}
+
+export interface Register extends BaseCallResult {
+  result: Register;
+}
+
+export interface Obtaining {
+  id: string;
+  token: string;
+}
+
+export interface ObtainingCallback extends BaseCallResult {
+  result: Obtaining;
+}
