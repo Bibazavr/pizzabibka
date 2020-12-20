@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import {API} from '../../../../API';
 import {WithAPI} from '../../../../contexts/WithAPI';
 import {Product} from './Product';
-import {useDispatch, useSelector} from 'react-redux';
 import {GlobalState} from '../../../../redux/reducers';
 import {loadProducts} from '../../../../redux/reducers/products/actions';
 
@@ -43,15 +44,7 @@ const ProductsIMPL = (props: ProductsProps): React.ReactElement => {
       {products.data
         ?.filter((prod) => prod.type === 'pizza')
         .map((prod, index) => {
-          return (
-            <Product
-              key={index}
-              product={prod}
-              onAdd={(count) => {
-                console.log(count);
-              }}
-            />
-          );
+          return <Product key={index} product={prod} />;
         })}
     </div>
   );

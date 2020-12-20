@@ -1,5 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import clsx from 'clsx';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,6 +16,7 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import EuroIcon from '@material-ui/icons/Euro';
 
 import {AuthContextTypes, WithAuth} from '../../contexts/WithAuth';
+import {GlobalState} from '../../redux/reducers';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,25 +40,25 @@ interface HeaderProps {
 
 const HeaderIMPL = (props: HeaderProps): React.ReactElement => {
   const classes = useStyles();
+  const cart = useSelector((state: GlobalState) => {
+    return state.cart;
+  });
 
-  console.log(props);
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Link to={'/'} className={classes.menuButton}>
+          <Link to={'/'} className={clsx([classes.title, classes.menuButton])}>
             <IconButton
               edge="start"
-              className={classes.menuButton}
+              className={clsx([classes.title, classes.menuButton])}
               color="inherit"
               aria-label="menu"
             >
               <LocalPizzaIcon />
+              <Typography variant="h6">Pizzabibka</Typography>
             </IconButton>
           </Link>
-          <Typography variant="h6" className={classes.title}>
-            Pizzabibka
-          </Typography>
 
           <IconButton color={'inherit'} aria-label="add an alarm">
             {props.auth.user?.currency === 'euro' ? (
@@ -65,12 +68,13 @@ const HeaderIMPL = (props: HeaderProps): React.ReactElement => {
             )}
           </IconButton>
 
-          <IconButton color={'inherit'} aria-label="add an alarm">
-            <Badge badgeContent={4} color="secondary">
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
-
+          <Link to={'/cart'} className={classes.menuButton}>
+            <IconButton color={'inherit'} aria-label="add an alarm">
+              <Badge badgeContent={cart.count} color="secondary">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+          </Link>
           {props.auth.user === null ? (
             <>
               <Link to={'/sign_in'} className={classes.menuButton}>

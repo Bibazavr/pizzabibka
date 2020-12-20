@@ -1,23 +1,8 @@
 import {combineReducers} from 'redux';
 import {ProductsReducer} from './products';
 import {ProductsState} from './products/types';
-
-interface CartState {
-  cart: [];
-}
-
-type Action = {type: string; payload: Record<string, unknown>};
-
-const initialState: CartState = {
-  cart: [],
-};
-
-const CartReducer = (state = initialState, action: Action): CartState => {
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
+import {CartReducer} from './cart';
+import {CartState} from './cart/types';
 
 export const reducers = combineReducers({
   products: ProductsReducer,

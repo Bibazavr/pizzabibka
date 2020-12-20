@@ -1,33 +1,32 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 
-import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from '@material-ui/icons/Add';
+import ClearIcon from '@material-ui/icons/Clear';
+import {makeStyles} from '@material-ui/core/styles';
 
-import {Product as ProductTypes} from '../../../../types';
-import {addToCart} from '../../../../redux/reducers/cart/actions';
+import {Product} from '../../../types';
+import {addToCart, removeFromCart} from '../../../redux/reducers/cart/actions';
 
-interface ProductProps {
-  product: ProductTypes;
+interface CartObjectProps {
+  product: Product;
+  count: number;
 }
 
 const useStyles = makeStyles({
   root: {
     margin: 5,
-    maxWidth: 220,
-    flexBasis: 200,
     flexGrow: 1,
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-between',
   },
   action: {
@@ -36,35 +35,30 @@ const useStyles = makeStyles({
   },
   content: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     flexGrow: 1,
   },
   contentText: {
-    flexGrow: 1,
+    flexGrow: 10,
   },
 });
-
-export const Product = (props: ProductProps): React.ReactElement => {
+export const CartObject = (props: CartObjectProps): React.ReactElement => {
   const classes = useStyles();
-  const [count, setCount] = React.useState(1);
-
   const dispatch = useDispatch();
-
-  const onAdd = () => {
-    addToCart({id: props.product.title, count: count}, dispatch);
-  };
 
   return (
     <Card className={classes.root}>
       <CardActionArea className={classes.content}>
-        <CardMedia
-          component="img"
-          alt={props.product.title}
-          height="220"
-          width="100%"
-          image={`/images/${props.product.image}`}
-          title={props.product.title}
-        />
+        <div>
+          <CardMedia
+            component="img"
+            alt={props.product.title}
+            height="100"
+            width="100%"
+            image={`/images/${props.product.image}`}
+            title={props.product.title}
+          />
+        </div>
         <CardContent className={classes.contentText}>
           <Typography gutterBottom variant="h5" component="h2">
             {props.product.title}
@@ -80,26 +74,38 @@ export const Product = (props: ProductProps): React.ReactElement => {
         </Typography>
 
         <IconButton
-          onClick={() => setCount(count - 1)}
-          disabled={count === 1}
+          onClick={() =>
+            removeFromCart({id: props.product.title, count: 1}, dispatch)
+          }
           size={'small'}
         >
           <RemoveIcon />
         </IconButton>
-        <Typography>{count}</Typography>
-        <IconButton onClick={() => setCount(count + 1)} size={'small'}>
+        <Typography>{props.count}</Typography>
+        <IconButton
+          onClick={() =>
+            addToCart({id: props.product.title, count: 1}, dispatch)
+          }
+          size={'small'}
+        >
           <AddIcon />
         </IconButton>
 
-        <Button
-          size="small"
-          color="primary"
-          onClick={() => {
-            onAdd();
-          }}
+        <Typography variant="body2" color="textSecondary" component="p">
+          {props.product.price * props.count}
+        </Typography>
+
+        <IconButton
+          onClick={() =>
+            removeFromCart(
+              {id: props.product.title, count: props.count},
+              dispatch
+            )
+          }
+          size={'small'}
         >
-          Add
-        </Button>
+          <ClearIcon />
+        </IconButton>
       </CardActions>
     </Card>
   );

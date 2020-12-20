@@ -34,11 +34,11 @@ export class API {
       credentials: 'same-origin',
     })
       .then((r) => {
-        console.log('backend response', r);
+        console.debug('backend response', r);
         return r.json();
       })
       .catch((e) => {
-        console.log('backend error', e);
+        console.error('backend error', e);
         return e;
       });
   };
