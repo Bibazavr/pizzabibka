@@ -20,3 +20,5 @@ export interface APIError {
 export interface Products extends BaseCallResult {
   result: Product[];
 }
+
+export type Register = BaseCallResult;

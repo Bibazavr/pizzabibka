@@ -1,5 +1,5 @@
 import {HEROKU_API_URI, LOCAL_API_URI} from '../constants';
-import {BaseCallResult, Products} from './types';
+import {BaseCallResult, Products, Register} from './types';
 
 const {origin} = window.location;
 const apiUrl =
@@ -11,7 +11,7 @@ export class API {
   request = async (
     url: string,
     method = 'GET',
-    data = null
+    data: Record<string, unknown> | null = null
   ): Promise<BaseCallResult> => {
     const headers: HeadersInit = {};
     let body;
@@ -38,5 +38,21 @@ export class API {
 
   loadProducts = async (): Promise<Products> => {
     return (await this.request('/products')) as Products;
+  };
+
+  register = async (email: string, password: string): Promise<Register> => {
+    return await this.request('user/registration', 'POST', {email, password});
+  };
+
+  obtainToken = async (email: string, password: string): Promise<Register> => {
+    return await this.request('/token/obtaining', 'POST', {email, password});
+  };
+
+  getUserData = async (id: string): Promise<Register> => {
+    return await this.request(`/user/${id}`);
+  };
+
+  verifyToken = async (): Promise<Register> => {
+    return await this.request('/token/verification');
   };
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+
 import {Products} from './Products';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

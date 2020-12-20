@@ -40,7 +40,6 @@ const useStyles = makeStyles({
 export const Product = (props: ProductProps): React.ReactElement => {
   const classes = useStyles();
 
-  console.log(props);
   return (
     <Card className={classes.root}>
       <CardActionArea className={classes.content}>

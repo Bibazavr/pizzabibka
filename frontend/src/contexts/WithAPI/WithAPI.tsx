@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {API} from '../API';
+import {API} from '../../API';
 
 export const APIContext = React.createContext<API>(new API());
 

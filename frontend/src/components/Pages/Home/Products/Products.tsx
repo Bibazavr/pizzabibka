@@ -1,10 +1,11 @@
 import React from 'react';
+import {makeStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
 import {API} from '../../../../API';
-import {WithAPI} from '../../../../context';
+import {WithAPI} from '../../../../contexts/WithAPI';
 import {Product as ProductTypes} from '../../../../types';
 import {Product} from './Product';
-import {makeStyles} from '@material-ui/core/styles';
 
 interface ProductsProps {
   API: API;
@@ -24,18 +25,22 @@ const ProductsIMPL = (props: ProductsProps): React.ReactElement => {
   const classes = useStyles();
 
   const [products, setProducts] = React.useState<ProductTypes[]>([]);
+  const [error, setError] = React.useState<string | null>(null);
   React.useEffect(() => {
     const loadProducts = async () => {
       const productsFromAPI = await props.API.loadProducts();
-      console.log('productsFromAPI', productsFromAPI);
+      if (productsFromAPI.error) {
+        return setError("Something went wrong. Can't get Products:c");
+      }
       setProducts(productsFromAPI.result);
     };
     loadProducts().then();
   }, []);
   return (
     <div className={classes.root}>
+      {error && <Typography>{error}</Typography>}
       {products
-        .filter((prod) => prod.type === 'pizza')
+        ?.filter((prod) => prod.type === 'pizza')
         .map((prod, index) => {
           return <Product key={index} product={prod} />;
         })}

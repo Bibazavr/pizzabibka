@@ -8,8 +8,9 @@ import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 import {ErrorBoundary} from './components/ErrorBoundary';
 import {store} from './redux/store';
-import {APIContext} from './context/WithAPI';
+import {APIContext} from './contexts/WithAPI/WithAPI';
 import {API} from './API';
+import {Auth} from './contexts/WithAuth';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,7 +18,9 @@ ReactDOM.render(
       <Provider store={store}>
         <BrowserRouter>
           <ErrorBoundary>
-            <App />
+            <Auth>
+              <App />
+            </Auth>
           </ErrorBoundary>
         </BrowserRouter>
       </Provider>

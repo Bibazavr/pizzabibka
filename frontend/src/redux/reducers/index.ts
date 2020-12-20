@@ -1,7 +1,8 @@
+import {combineReducers} from 'redux';
+
 interface GlobalState {
   cart: [];
   products: [];
-  authType: null;
 }
 
 type Action = {type: string; payload: Record<string, unknown>};
@@ -9,7 +10,6 @@ type Action = {type: string; payload: Record<string, unknown>};
 const initialState: GlobalState = {
   cart: [],
   products: [],
-  authType: null,
 };
 
 export const reducer = (state = initialState, action: Action): GlobalState => {
@@ -18,3 +18,5 @@ export const reducer = (state = initialState, action: Action): GlobalState => {
       return state;
   }
 };
+
+export const reducers = combineReducers(reducer);
