@@ -30,7 +30,7 @@ const ProductsIMPL = (props: ProductsProps): React.ReactElement => {
     const loadProducts = async () => {
       const productsFromAPI = await props.API.loadProducts();
       if (productsFromAPI.error) {
-        return setError("Something went wrong. Can't get Products:c");
+        return setError('Something went wrong. Can`t get Products:c');
       }
       setProducts(productsFromAPI.result);
     };
