@@ -8,7 +8,7 @@ export interface Product {
 
 export interface User {
   address: string;
-  currency: 'usd';
+  currency: 'usd' | 'euro';
   email: string;
   id: string;
   phone: string;

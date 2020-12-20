@@ -10,6 +10,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Visibility from '@material-ui/icons/Visibility';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
 import {AuthContextTypes, WithAuth} from '../../../contexts/WithAuth';
 
@@ -37,12 +38,12 @@ const SignInIMPL = (props: SignInProps): React.ReactElement => {
   const [password, setPassword] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
 
-  console.log(props);
   const submit = () => {
     props.auth.obtainToken(email, password);
   };
   return (
     <div className={classes.root}>
+      <Typography>Sing In</Typography>
       <TextField
         id="standard-error"
         className={classes.field}

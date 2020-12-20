@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -9,7 +10,9 @@ import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import LocalPizzaIcon from '@material-ui/icons/LocalPizza';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Badge from '@material-ui/core/Badge';
-import {Link} from 'react-router-dom';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import EuroIcon from '@material-ui/icons/Euro';
+
 import {AuthContextTypes, WithAuth} from '../../contexts/WithAuth';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -28,9 +31,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Header = (): React.ReactElement => {
+interface HeaderProps {
+  auth: AuthContextTypes;
+}
+
+const HeaderIMPL = (props: HeaderProps): React.ReactElement => {
   const classes = useStyles();
 
+  console.log(props);
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -48,19 +56,33 @@ export const Header = (): React.ReactElement => {
           <Typography variant="h6" className={classes.title}>
             Pizzabibka
           </Typography>
+
           <IconButton color={'inherit'} aria-label="add an alarm">
-            <Badge badgeContent={4} color="secondary">
-              <ShoppingCartIcon />
-            </Badge>
+            {props.auth.user?.currency === 'euro' ? (
+              <EuroIcon />
+            ) : (
+              <AttachMoneyIcon />
+            )}
           </IconButton>
-          <Link to={'/sign_in'} className={classes.menuButton}>
-            <Button color="inherit">Sign in</Button>
-          </Link>
-          <Link to={'/sign_up'} className={classes.menuButton}>
-            <Button color="inherit">Sign up</Button>
-          </Link>
+
+          {props.auth.user === null && (
+            <>
+              <IconButton color={'inherit'} aria-label="add an alarm">
+                <Badge badgeContent={4} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+              <Link to={'/sign_in'} className={classes.menuButton}>
+                <Button color="inherit">Sign in</Button>
+              </Link>
+              <Link to={'/sign_up'} className={classes.menuButton}>
+                <Button color="inherit">Sign up</Button>
+              </Link>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </div>
   );
 };
+export const Header = WithAuth(HeaderIMPL);
