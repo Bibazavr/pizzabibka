@@ -10,6 +10,7 @@ import LocalPizzaIcon from '@material-ui/icons/LocalPizza';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Badge from '@material-ui/core/Badge';
 import {Link} from 'react-router-dom';
+import {AuthContextTypes, WithAuth} from '../../contexts/WithAuth';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

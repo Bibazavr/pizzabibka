@@ -2,11 +2,10 @@ import * as React from 'react';
 import Cookies from 'cookies-js';
 import {WithAPI} from '../WithAPI';
 import {API} from '../../API';
+import {User} from '../../types';
 
 export interface AuthContextTypes {
-  authenticated: boolean;
-  user: null | Record<string, unknown>;
-  token: string;
+  user: null | User;
   obtainToken: (email: string, password: string) => void;
   logout: () => void;
   register: (email: string, password: string) => void;
@@ -14,9 +13,7 @@ export interface AuthContextTypes {
 }
 
 export const AuthContext = React.createContext<AuthContextTypes>({
-  authenticated: false,
   user: null,
-  token: '',
   obtainToken: () => {
     console.log('obtainToken empty');
   },
@@ -56,8 +53,7 @@ export interface AuthProps {
 }
 
 const AuthIMPL = (props: AuthProps): React.ReactElement => {
-  const [user, setUser] = React.useState<Record<string, unknown> | null>(null);
-  // const [authStatus, setAuthStatus] = React.useState();
+  const [user, setUser] = React.useState<User | null>(null);
 
   const register = (email: string, password: string) => {
     props.API.register(email, password)
@@ -99,6 +95,7 @@ const AuthIMPL = (props: AuthProps): React.ReactElement => {
     (id: string) => {
       props.API.getUserData(id)
         .then((res) => {
+          setUser(res.result);
           console.log('getUserData success', res);
         })
         .catch((e) => {
@@ -128,9 +125,7 @@ const AuthIMPL = (props: AuthProps): React.ReactElement => {
   }, [verifyToken]);
 
   const auth: AuthContextTypes = {
-    authenticated: false,
     user: user,
-    token: '',
     obtainToken: obtainToken,
     logout: logout,
     register: register,

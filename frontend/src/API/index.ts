@@ -1,5 +1,11 @@
 import {HEROKU_API_URI, LOCAL_API_URI} from '../constants';
-import {BaseCallResult, ObtainingCallback, Products, Register} from './types';
+import {
+  BaseCallResult,
+  ObtainingCallback,
+  ProductsCallBack,
+  RegisterCallBack,
+  UserCallback,
+} from './types';
 
 const {origin} = window.location;
 const apiUrl =
@@ -37,15 +43,18 @@ export class API {
       });
   };
 
-  loadProducts = async (): Promise<Products> => {
-    return (await this.request('/products')) as Products;
+  loadProducts = async (): Promise<ProductsCallBack> => {
+    return (await this.request('/products')) as ProductsCallBack;
   };
 
-  register = async (email: string, password: string): Promise<Register> => {
+  register = async (
+    email: string,
+    password: string
+  ): Promise<RegisterCallBack> => {
     return (await this.request('/user/registration', 'POST', {
       email,
       password,
-    })) as Register;
+    })) as RegisterCallBack;
   };
 
   obtainToken = async (
@@ -58,11 +67,11 @@ export class API {
     })) as ObtainingCallback;
   };
 
-  getUserData = async (id: string): Promise<Register> => {
-    return (await this.request(`/user/${id}`)) as Register;
+  getUserData = async (id: string): Promise<UserCallback> => {
+    return (await this.request(`/user/${id}`)) as UserCallback;
   };
 
-  verifyToken = async (): Promise<Register> => {
-    return (await this.request('/token/verification')) as Register;
+  verifyToken = async (): Promise<RegisterCallBack> => {
+    return (await this.request('/token/verification')) as RegisterCallBack;
   };
 }
