@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+
+import {makeStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import {API} from '../../../../API';
-import {WithAPI} from '../../../../context';
-import {Product as ProductTypes} from '../../../../types';
+import {WithAPI} from '../../../../contexts/WithAPI';
 import {Product} from './Product';
-import {makeStyles} from '@material-ui/core/styles';
+import {GlobalState} from '../../../../redux/reducers';
+import {loadProducts} from '../../../../redux/reducers/products/actions';
 
 interface ProductsProps {
   API: API;
@@ -18,24 +23,31 @@ const useStyles = makeStyles({
     alignContent: 'center',
     flexDirection: 'row',
   },
+  loader: {
+    width: '100%',
+  },
 });
 
 const ProductsIMPL = (props: ProductsProps): React.ReactElement => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const [products, setProducts] = React.useState<ProductTypes[]>([]);
-  React.useEffect(() => {
-    const loadProducts = async () => {
-      const productsFromAPI = await props.API.loadProducts();
-      console.log('productsFromAPI', productsFromAPI);
-      setProducts(productsFromAPI.result);
-    };
-    loadProducts().then();
+  const products = useSelector((state: GlobalState) => {
+    return state.products;
+  });
+
+  useEffect(() => {
+    if (products.data.length === 0) {
+      loadProducts(props.API, dispatch);
+    }
   }, []);
+
   return (
     <div className={classes.root}>
-      {products
-        .filter((prod) => prod.type === 'pizza')
+      {products.error && <Typography>{products.error}</Typography>}
+      {products.loading && <LinearProgress className={classes.loader} />}
+      {products.data
+        ?.filter((prod) => prod.type === 'pizza')
         .map((prod, index) => {
           return <Product key={index} product={prod} />;
         })}

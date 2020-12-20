@@ -1,20 +1,15 @@
-interface GlobalState {
-  cart: [];
-  products: [];
-  authType: null;
+import {combineReducers} from 'redux';
+import {ProductsReducer} from './products';
+import {ProductsState} from './products/types';
+import {CartReducer} from './cart';
+import {CartState} from './cart/types';
+
+export const reducers = combineReducers({
+  products: ProductsReducer,
+  cart: CartReducer,
+});
+
+export interface GlobalState {
+  cart: CartState;
+  products: ProductsState;
 }
-
-type Action = {type: string; payload: Record<string, unknown>};
-
-const initialState: GlobalState = {
-  cart: [],
-  products: [],
-  authType: null,
-};
-
-export const reducer = (state = initialState, action: Action): GlobalState => {
-  switch (action.type) {
-    default:
-      return state;
-  }
-};

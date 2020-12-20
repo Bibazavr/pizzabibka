@@ -1,4 +1,4 @@
-import {Product} from '../types';
+import {Obtaining, Product, Register, User} from '../types';
 
 export interface BaseCallResult {
   status: number;
@@ -17,6 +17,18 @@ export interface APIError {
   error?: any;
 }
 
-export interface Products extends BaseCallResult {
+export interface ProductsCallBack extends BaseCallResult {
   result: Product[];
+}
+
+export interface RegisterCallBack extends BaseCallResult {
+  result: Register;
+}
+
+export interface ObtainingCallback extends BaseCallResult {
+  result: Obtaining;
+}
+
+export interface UserCallback extends BaseCallResult {
+  result: User;
 }
