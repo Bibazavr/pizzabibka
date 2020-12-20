@@ -8,9 +8,13 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {Product as ProductTypes} from '../../../../types';
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 
 interface ProductProps {
   product: ProductTypes;
+  onAdd: (count: number) => void;
 }
 
 const useStyles = makeStyles({
@@ -39,6 +43,7 @@ const useStyles = makeStyles({
 
 export const Product = (props: ProductProps): React.ReactElement => {
   const classes = useStyles();
+  const [count, setCount] = React.useState(1);
 
   return (
     <Card className={classes.root}>
@@ -64,8 +69,21 @@ export const Product = (props: ProductProps): React.ReactElement => {
         <Typography variant="body2" color="textSecondary" component="p">
           {props.product.price}
         </Typography>
+
+        <IconButton
+          onClick={() => setCount(count - 1)}
+          disabled={count === 1}
+          size={'small'}
+        >
+          <RemoveIcon />
+        </IconButton>
+        <Typography>{count}</Typography>
+        <IconButton onClick={() => setCount(count + 1)} size={'small'}>
+          <AddIcon />
+        </IconButton>
+
         <Button size="small" color="primary">
-          Add to cart
+          Add
         </Button>
       </CardActions>
     </Card>

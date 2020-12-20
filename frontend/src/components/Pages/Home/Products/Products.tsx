@@ -43,7 +43,15 @@ const ProductsIMPL = (props: ProductsProps): React.ReactElement => {
       {products.data
         ?.filter((prod) => prod.type === 'pizza')
         .map((prod, index) => {
-          return <Product key={index} product={prod} />;
+          return (
+            <Product
+              key={index}
+              product={prod}
+              onAdd={(count) => {
+                console.log(count);
+              }}
+            />
+          );
         })}
     </div>
   );
