@@ -1,4 +1,4 @@
-import {AuthActions, UPDATE} from './authActions';
+import {AuthActions} from './authActions';
 
 interface AuthState {
   authType: null | string;
