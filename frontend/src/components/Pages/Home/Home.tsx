@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       justifyContent: 'center',
       left: 1000,
+      overflow: 'auto',
     },
   })
 );

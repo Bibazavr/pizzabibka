@@ -71,7 +71,7 @@ export class API {
     return (await this.request(`/user/${id}`)) as UserCallback;
   };
 
-  verifyToken = async (): Promise<RegisterCallBack> => {
-    return (await this.request('/token/verification')) as RegisterCallBack;
+  verifyToken = async (): Promise<UserCallback> => {
+    return (await this.request('/token/verification')) as UserCallback;
   };
 }

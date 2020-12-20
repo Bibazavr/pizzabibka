@@ -36,14 +36,21 @@ const SignUpIMPL = (props: SignUpProps): React.ReactElement => {
   const classes = useStyles();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [repeatPassword, setRepeatPassword] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
+  const [showRepeatPassword, setShowRepeatPassword] = React.useState(false);
+  const [passwordError, setPasswordError] = React.useState<string>('');
 
   const submit = () => {
+    if (password !== repeatPassword) {
+      return setPasswordError('passwords must be equal');
+    }
     props.auth.register(email, password);
+    window.location.href = window.location.origin;
   };
   return (
     <div className={classes.root}>
-      <Typography>Sing Up</Typography>
+      <Typography align={'center'}>Sing Up</Typography>
       <TextField
         id="standard-error"
         className={classes.field}
@@ -51,7 +58,11 @@ const SignUpIMPL = (props: SignUpProps): React.ReactElement => {
         value={email}
         onChange={(event) => setEmail(event.target.value)}
       />
-      <FormControl className={classes.field}>
+      <FormControl
+        className={classes.field}
+        aria-errormessage={passwordError}
+        error={!!passwordError}
+      >
         <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
         <Input
           id="standard-adornment-password"
@@ -71,6 +82,36 @@ const SignUpIMPL = (props: SignUpProps): React.ReactElement => {
           }
         />
       </FormControl>
+      <FormControl
+        className={classes.field}
+        aria-errormessage={passwordError}
+        error={!!passwordError}
+      >
+        <InputLabel htmlFor="standard-adornment-password">
+          Repeat Password
+        </InputLabel>
+        <Input
+          id="standard-adornment-password"
+          type={showRepeatPassword ? 'text' : 'password'}
+          value={repeatPassword}
+          error={!!passwordError}
+          onChange={(event) => setRepeatPassword(event.target.value)}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={() => setShowRepeatPassword(!showRepeatPassword)}
+                onMouseDown={() => setShowRepeatPassword(!showRepeatPassword)}
+              >
+                {showRepeatPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+      </FormControl>
+      <Typography color={'error'} align={'center'}>
+        {passwordError}
+      </Typography>
       <Button onClick={submit}>Submit</Button>
     </div>
   );

@@ -40,10 +40,11 @@ const SignInIMPL = (props: SignInProps): React.ReactElement => {
 
   const submit = () => {
     props.auth.obtainToken(email, password);
+    window.location.href = window.location.origin;
   };
   return (
     <div className={classes.root}>
-      <Typography>Sing In</Typography>
+      <Typography align={'center'}>Sing In</Typography>
       <TextField
         id="standard-error"
         className={classes.field}

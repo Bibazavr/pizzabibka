@@ -1,5 +1,5 @@
 export interface Product {
-  type: string;
+  type: 'pizza' | string;
   title: string;
   ingredients: string;
   image: string;

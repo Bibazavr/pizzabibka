@@ -65,13 +65,14 @@ const HeaderIMPL = (props: HeaderProps): React.ReactElement => {
             )}
           </IconButton>
 
-          {props.auth.user === null && (
+          <IconButton color={'inherit'} aria-label="add an alarm">
+            <Badge badgeContent={4} color="secondary">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+
+          {props.auth.user === null ? (
             <>
-              <IconButton color={'inherit'} aria-label="add an alarm">
-                <Badge badgeContent={4} color="secondary">
-                  <ShoppingCartIcon />
-                </Badge>
-              </IconButton>
               <Link to={'/sign_in'} className={classes.menuButton}>
                 <Button color="inherit">Sign in</Button>
               </Link>
@@ -79,6 +80,13 @@ const HeaderIMPL = (props: HeaderProps): React.ReactElement => {
                 <Button color="inherit">Sign up</Button>
               </Link>
             </>
+          ) : (
+            <Button
+              onClick={() => props.auth.logout()}
+              className={classes.menuButton}
+            >
+              Log out
+            </Button>
           )}
         </Toolbar>
       </AppBar>

@@ -58,27 +58,27 @@ const AuthIMPL = (props: AuthProps): React.ReactElement => {
   const register = (email: string, password: string) => {
     props.API.register(email, password)
       .then((res) => {
-        console.log('register success', res);
+        console.debug('register success', res);
       })
       .catch((e) => {
-        console.log('register error', e);
+        console.error('register error', e);
       });
   };
 
   const obtainToken = (email: string, password: string) => {
     props.API.obtainToken(email, password)
       .then((res) => {
-        console.log('obtainToken success', res);
+        console.debug('obtainToken success', res);
         const {error, result, status} = res;
 
         if (error || status >= 300) {
-          console.log('obtainToken error: ', error);
+          console.debug('obtainToken error: ', error);
         } else {
           getUserData(result.id);
         }
       })
       .catch((e) => {
-        console.log('obtainToken', e);
+        console.error('obtainToken', e);
       });
   };
 
@@ -95,8 +95,8 @@ const AuthIMPL = (props: AuthProps): React.ReactElement => {
     (id: string) => {
       props.API.getUserData(id)
         .then((res) => {
+          console.debug('getUserData success', res);
           setUser(res.result);
-          console.log('getUserData success', res);
         })
         .catch((e) => {
           console.error('getUserData error', e);
@@ -108,7 +108,8 @@ const AuthIMPL = (props: AuthProps): React.ReactElement => {
   const verifyToken = React.useCallback(() => {
     props.API.verifyToken()
       .then((res) => {
-        console.log('verifyToken success', res);
+        console.debug('verifyToken success', res);
+        setUser(res.result);
       })
       .catch((e) => {
         console.error('verifyToken error', e);
