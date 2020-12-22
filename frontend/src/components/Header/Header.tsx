@@ -22,14 +22,19 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       color: theme.palette.background.default,
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      alignContent: 'center',
     },
     menuButton: {
       color: '#fff',
-      marginRight: theme.spacing(2),
       textDecoration: 'none',
+      marginRight: theme.spacing(2),
     },
     title: {
       flexGrow: 1,
+      color: '#fff',
+      textDecoration: 'none',
     },
   })
 );
@@ -45,56 +50,64 @@ const HeaderIMPL = (props: HeaderProps): React.ReactElement => {
   });
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Link to={'/'} className={clsx([classes.title, classes.menuButton])}>
-            <IconButton
-              edge="start"
-              className={clsx([classes.title, classes.menuButton])}
-              color="inherit"
-              aria-label="menu"
-            >
-              <LocalPizzaIcon />
-              <Typography variant="h6">Pizzabibka</Typography>
-            </IconButton>
-          </Link>
-
-          <IconButton color={'inherit'} aria-label="add an alarm">
-            {props.auth.user?.currency === 'euro' ? (
-              <EuroIcon />
-            ) : (
-              <AttachMoneyIcon />
-            )}
+    <AppBar position="sticky">
+      <Toolbar className={classes.root}>
+        <Link to={'/'} className={classes.title}>
+          <IconButton
+            name={'pizza'}
+            edge="start"
+            className={clsx([classes.title, classes.menuButton])}
+            color="inherit"
+            aria-label="menu"
+          >
+            <LocalPizzaIcon />
+            <Typography variant="h6">Pizzabibka</Typography>
           </IconButton>
+        </Link>
 
-          <Link to={'/cart'} className={classes.menuButton}>
-            <IconButton color={'inherit'} aria-label="add an alarm">
-              <Badge badgeContent={cart.count} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-          </Link>
-          {props.auth.user === null ? (
-            <>
-              <Link to={'/sign_in'} className={classes.menuButton}>
-                <Button color="inherit">Sign in</Button>
-              </Link>
-              <Link to={'/sign_up'} className={classes.menuButton}>
-                <Button color="inherit">Sign up</Button>
-              </Link>
-            </>
+        <IconButton
+          name={'currency'}
+          color={'inherit'}
+          aria-label="add an alarm"
+        >
+          {props.auth.user?.currency === 'euro' ? (
+            <EuroIcon />
           ) : (
-            <Button
-              onClick={() => props.auth.logout()}
-              className={classes.menuButton}
-            >
-              Log out
-            </Button>
+            <AttachMoneyIcon />
           )}
-        </Toolbar>
-      </AppBar>
-    </div>
+        </IconButton>
+
+        <Link to={'/cart'} className={classes.menuButton}>
+          <IconButton name={'cart'} color={'inherit'} aria-label="add an alarm">
+            <Badge badgeContent={cart.count} color="secondary">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+        </Link>
+        {props.auth.user === null ? (
+          <>
+            <Link to={'/sign_in'} className={classes.menuButton}>
+              <Button color="inherit" name={'Sign in'}>
+                Sign in
+              </Button>
+            </Link>
+            <Link to={'/sign_up'} className={classes.menuButton}>
+              <Button color="inherit" name={'Sign up'}>
+                Sign up
+              </Button>
+            </Link>
+          </>
+        ) : (
+          <Button
+            name={'Log out'}
+            onClick={() => props.auth.logout()}
+            className={classes.menuButton}
+          >
+            Log out
+          </Button>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 };
 export const Header = WithAuth(HeaderIMPL);
