@@ -72,6 +72,7 @@ const SignUpIMPL = (props: SignUpProps): React.ReactElement => {
           endAdornment={
             <InputAdornment position="end">
               <IconButton
+                name={'show password'}
                 aria-label="toggle password visibility"
                 onClick={() => setShowPassword(!showPassword)}
                 onMouseDown={() => setShowPassword(!showPassword)}
@@ -87,11 +88,11 @@ const SignUpIMPL = (props: SignUpProps): React.ReactElement => {
         aria-errormessage={passwordError}
         error={!!passwordError}
       >
-        <InputLabel htmlFor="standard-adornment-password">
+        <InputLabel htmlFor="standard-adornment-repeatPassword">
           Repeat Password
         </InputLabel>
         <Input
-          id="standard-adornment-password"
+          id="standard-adornment-repeatPassword"
           type={showRepeatPassword ? 'text' : 'password'}
           value={repeatPassword}
           error={!!passwordError}
@@ -99,7 +100,8 @@ const SignUpIMPL = (props: SignUpProps): React.ReactElement => {
           endAdornment={
             <InputAdornment position="end">
               <IconButton
-                aria-label="toggle password visibility"
+                name={'show repeatPassword'}
+                aria-label="toggle repeatPassword visibility"
                 onClick={() => setShowRepeatPassword(!showRepeatPassword)}
                 onMouseDown={() => setShowRepeatPassword(!showRepeatPassword)}
               >
@@ -112,7 +114,9 @@ const SignUpIMPL = (props: SignUpProps): React.ReactElement => {
       <Typography color={'error'} align={'center'}>
         {passwordError}
       </Typography>
-      <Button onClick={submit}>Submit</Button>
+      <Button onClick={submit} name={'submit'}>
+        Submit
+      </Button>
     </div>
   );
 };

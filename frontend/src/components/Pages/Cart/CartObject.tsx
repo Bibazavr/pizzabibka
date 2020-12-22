@@ -74,6 +74,7 @@ export const CartObject = (props: CartObjectProps): React.ReactElement => {
         </Typography>
 
         <IconButton
+          name={`${props.product.title} decrement`}
           onClick={() =>
             removeFromCart({id: props.product.title, count: 1}, dispatch)
           }
@@ -83,6 +84,7 @@ export const CartObject = (props: CartObjectProps): React.ReactElement => {
         </IconButton>
         <Typography>{props.count}</Typography>
         <IconButton
+          name={`${props.product.title} increment`}
           onClick={() =>
             addToCart({id: props.product.title, count: 1}, dispatch)
           }
@@ -96,6 +98,7 @@ export const CartObject = (props: CartObjectProps): React.ReactElement => {
         </Typography>
 
         <IconButton
+          name={`${props.product.title} remove`}
           onClick={() =>
             removeFromCart(
               {id: props.product.title, count: props.count},

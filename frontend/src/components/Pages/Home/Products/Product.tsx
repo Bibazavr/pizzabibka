@@ -80,18 +80,24 @@ export const Product = (props: ProductProps): React.ReactElement => {
         </Typography>
 
         <IconButton
+          name={`${props.product.title} decrement`}
           onClick={() => setCount(count - 1)}
           disabled={count === 1}
           size={'small'}
         >
-          <RemoveIcon />
+          <RemoveIcon name={`${props.product.title} decrement`} />
         </IconButton>
         <Typography>{count}</Typography>
-        <IconButton onClick={() => setCount(count + 1)} size={'small'}>
-          <AddIcon />
+        <IconButton
+          name={`${props.product.title} increment`}
+          onClick={() => setCount(count + 1)}
+          size={'small'}
+        >
+          <AddIcon name={`${props.product.title} increment`} />
         </IconButton>
 
         <Button
+          name={`${props.product.title} add`}
           size="small"
           color="primary"
           onClick={() => {
